@@ -20,9 +20,9 @@ import java.util.*;
         @Index(columnList = "createdBy"),
 })
 
-@EntityListeners(AuditingEntityListener.class)
+
 @Entity
-public class Article {
+public class Article extends AuditingFields{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -40,12 +40,6 @@ public class Article {
 //    @OneToMany(mappedBy = "article", cascade = CascadeType.ALL) // aManyToOne관계 양방향의 Team에서 Member를 조회할때 영속성 컨텍스트가 종료되어 발생하는 오류
     @OneToMany(mappedBy = "article", fetch = FetchType.EAGER, cascade = CascadeType.ALL) // article table에서 온 것 명시
     private final Set<ArticleComment> articleComments = new LinkedHashSet<>();
-
-    @CreatedDate @Column(nullable = false) private LocalDateTime createdAt; // 생성일시
-    @CreatedBy @Column(nullable = false, length = 100) private String createdBy; // 생성자
-    @LastModifiedDate  @Column(nullable = false) private LocalDateTime modifiedAt; // 수정일시
-    @LastModifiedBy @Column(nullable = false, length = 100) private String modifiedBy; // 수정자
-
 
     protected Article(){};
 
